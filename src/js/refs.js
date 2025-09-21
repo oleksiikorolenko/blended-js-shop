@@ -1,1 +1,4 @@
-export const categoriesList = document.querySelector('.categories');
+export const refs = {
+  allCategories: document.querySelector('.categories'),
+  allProducts: document.querySelector('.products')
+};
