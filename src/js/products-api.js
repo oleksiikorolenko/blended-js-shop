@@ -18,4 +18,14 @@ export async function productsByCategory(category) {
   const response = await axios.get(`/products/category/${category}`);
   console.log(response.data.products)
   return response.data.products;
-}
+};
+
+export async function productById(id) {
+  const response = await axios.get(`/products/${id}`);
+  console.log(response.data);
+  return response.data;
+
+};
+
+
+productById(3);

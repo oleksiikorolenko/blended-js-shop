@@ -11,6 +11,12 @@ export function renderCategoriesList(categories) {
 
 
 export function renderProductsList(products) {
+  if (products.length === 0) {
+    refs.notFoundDiv.classList.add('not-found--visible');
+     return;
+  }
+refs.notFoundDiv.classList.remove('not-found--visible');
+
   refs.allProducts.innerHTML = '';
   const markup = products.map(product => `<li class="products__item" data-id="${product.id}">
     <img class="products__image" src="${product.thumbnail}" alt="${product.title}"/>
@@ -22,6 +28,20 @@ export function renderProductsList(products) {
 
   refs.allProducts.innerHTML = markup;
 
+};
+
+
+export function renderModalProduct(product) {
+refs.modalProduct.innerHTML = `<img class="modal-product__img" src="${product.thumbnail}" alt="${product.title}" />
+      <div class="modal-product__content">
+        <p class="modal-product__title">${product.title}</p>
+        <ul class="modal-product__tags">${product.tags?.map(tag => `<li class="modal-product__tag">#${tag}</li>`).join('') || ''}</ul>
+        <p class="modal-product__description">${product.description}</p>
+        <p class="modal-product__shipping-information">Shipping:${product.shippingInformation}</p>
+        <p class="modal-product__return-policy">Return Policy:${product.returnPolicy}</p>
+        <p class="modal-product__price">Price:${product.price} $</p>
+        <button class="modal-product__buy-btn" type="button">Buy</button>
+      </div>`
 };
 
 

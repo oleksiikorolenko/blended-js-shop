@@ -1,7 +1,8 @@
-//Логіка сторінки Home
-import { getAllCategories, getAllProducts, productsByCategory } from "./js/products-api";
+
+import { openModal } from "./js/modal.js";
+import { getAllCategories, getAllProducts, productById, productsByCategory } from "./js/products-api";
 import { refs } from "./js/refs";
-import { renderCategoriesList, renderProductsList } from "./js/render-function.js";
+import { renderCategoriesList, renderModalProduct, renderProductsList } from "./js/render-function.js";
 
 getAllCategories();
 
@@ -14,7 +15,7 @@ export async function renderCategories () {
 renderCategories();
 
 export async function renderProducts () {
-    const products = await getAllProducts();
+  const products = await getAllProducts();
     renderProductsList(products);
 };
 
@@ -34,3 +35,15 @@ refs.allCategories.addEventListener('click', async(e) => {
 });
 
 productsByCategory();
+
+refs.allProducts.addEventListener('click', async e => {
+  const li = e.target.closest('li[data-id]');
+  if (!li) return;
+
+  const productId = li.dataset.id;
+
+  const product = await productById(productId);
+  renderModalProduct(product);
+  openModal();
+
+});
