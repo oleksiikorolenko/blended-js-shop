@@ -1,6 +1,7 @@
 
+import { toggleNotFound } from "./js/handlers.js";
 import { openModal } from "./js/modal.js";
-import { getAllCategories, getAllProducts, productById, productsByCategory } from "./js/products-api";
+import { getAllCategories, getAllProducts, productById, productsByCategory, searchProductsByName } from "./js/products-api";
 import { refs } from "./js/refs";
 import { renderCategoriesList, renderModalProduct, renderProductsList } from "./js/render-function.js";
 
@@ -47,3 +48,38 @@ refs.allProducts.addEventListener('click', async e => {
   openModal();
 
 });
+
+refs.searchForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const query = refs.input.value.trim();
+
+  if (!query) return;
+
+  try {
+    const products = await searchProductsByName(query);
+     refs.allProducts.innerHTML = '';
+    renderProductsList(products.slice(0, 12));
+    toggleNotFound(products.length === 0);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+refs.clearBtn.addEventListener('click', async () => {
+  refs.input.value = '';
+  refs.clearBtn.classList.remove('visible');
+
+  try {
+    const products = await getAllProducts();
+    renderProductsList(products);
+    toggleNotFound(false);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+refs.input.addEventListener('input', () => {
+  const hasValue = refs.input.value.trim().length > 0;
+  refs.clearBtn.classList.toggle('visible', hasValue);
+})
+

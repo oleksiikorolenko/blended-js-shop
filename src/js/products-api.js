@@ -27,5 +27,12 @@ export async function productById(id) {
 
 };
 
+export async function searchProductsByName(quary) {
+  const response = await axios.get(`/products/search?q=${quary}`);
+  console.log(response.data);
+  return response.data.products;
+}
+
+
 
 productById(3);
