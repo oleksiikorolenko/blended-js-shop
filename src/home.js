@@ -1,10 +1,11 @@
 
 import { toggleNotFound } from "./js/handlers.js";
-import { openModal } from "./js/modal.js";
+import { updateCartCount } from "./js/helpers.js";
+import { openModal, openProductModal } from "./js/modal.js";
 import { getAllCategories, getAllProducts, productById, productsByCategory, searchProductsByName } from "./js/products-api";
 import { refs } from "./js/refs";
 import { renderCategoriesList, renderModalProduct, renderProductsList } from "./js/render-function.js";
-
+updateCartCount();
 getAllCategories();
 
 export async function renderCategories () {
@@ -44,7 +45,8 @@ refs.allProducts.addEventListener('click', async e => {
   const productId = li.dataset.id;
 
   const product = await productById(productId);
-  renderModalProduct(product);
+renderModalProduct(product);
+  openProductModal(product);
   openModal();
 
 });
@@ -82,4 +84,6 @@ refs.input.addEventListener('input', () => {
   const hasValue = refs.input.value.trim().length > 0;
   refs.clearBtn.classList.toggle('visible', hasValue);
 })
+
+
 

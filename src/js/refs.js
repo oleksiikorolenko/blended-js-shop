@@ -9,5 +9,8 @@ export const refs = {
   modalCloseBtn: document.querySelector('.modal__close-btn'),
   searchForm: document.querySelector('.search-form'),
   input: document.querySelector('.search-form__input'),
-  clearBtn: document.querySelector('.search-form__btn-clear')
+  clearBtn: document.querySelector('.search-form__btn-clear'),
+  addToCartBtn: document.querySelector('.modal-product__btn--cart'),
+  addToWishListBtn: document.querySelector('.modal-product__btn--wishlist'),
+  cartCount: document.querySelector('[data-cart-count]'),
 };
